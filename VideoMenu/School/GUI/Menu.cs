@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace School.GUI
+namespace VideoMenu.GUI
 {
     abstract class Menu
     {
         private int EXIT_OPTION = 0;
+        protected bool shouldCloseOnFinish = false;
         private string inputText = "Please select an option:";
 
 
@@ -51,9 +52,8 @@ namespace School.GUI
 
         public void Run() 
         {
-            bool run = true;
 
-            while(run) 
+            do
             {
                 PrintMenu();
                 int option = GetOption();
@@ -62,12 +62,12 @@ namespace School.GUI
                 {
                     DoAction(option);
                 }
-                else 
+                else
                 {
                     Console.WriteLine("\nClosing " + menuTitle);
-                    run = false;
+                    break;
                 }
-            }
+            } while (!shouldCloseOnFinish);
         }
 
         private void PrintMenu()

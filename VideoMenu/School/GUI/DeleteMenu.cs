@@ -1,5 +1,4 @@
-﻿using School.GUI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using VideoMenu.Models;
@@ -13,6 +12,7 @@ namespace VideoMenu.GUI
         public DeleteMenu() : base("Delete Menu", "Delete by ID", "Delete by selection")
         {
             videoService = new VideoService();
+            shouldCloseOnFinish = true;
         }
 
         protected override void DoAction(int option)
@@ -21,11 +21,9 @@ namespace VideoMenu.GUI
             {
                 case 1:
                     DeleteByID();
-                    Pause();
                     break;
                 case 2:
                     DeleteBySelection();
-                    Pause();
                     break;
                 default:
                     break;

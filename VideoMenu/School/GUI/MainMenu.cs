@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using VideoMenu.GUI;
 using VideoMenu.Models;
 using VideoMenu.Services;
 
-namespace School.GUI
+namespace VideoMenu.GUI
 {
     class MainMenu : Menu
     {
         private IVideoService videoService;
 
-        public MainMenu() : base("Main Menu", "View Videos", "Add Video","Remove Video","Update Video")
+        public MainMenu() : base("Main Menu", "View Videos", "Search video", "Add Video","Remove Video","Update Video")
         {
             videoService = new VideoService();
         }
@@ -26,14 +25,18 @@ namespace School.GUI
                     Pause();
                     break;
                 case 2:
-                    AddVideo();
+                    new SearchMenu().Run();
                     Pause();
                     break;
                 case 3:
-                    new DeleteMenu().Run();
+                    AddVideo();
                     Pause();
                     break;
                 case 4:
+                    new DeleteMenu().Run();
+                    Pause();
+                    break;
+                case 5:
                     Updatevideo();
                     Pause();
                     break;
