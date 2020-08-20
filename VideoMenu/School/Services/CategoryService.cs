@@ -48,7 +48,6 @@ namespace VideoMenu.Services
 
         public bool DeleteCategory(int id)
         {
-            videoTable.DeleteCatoryAssignedToVideo(id);
             return categoryTable.DeleteCategory(id);
         }
 

@@ -45,8 +45,6 @@ namespace VideoMenu.Services
 
             Console.WriteLine("\nSelect a valid category");
 
-
-
             for (int i = 0; i < allCategories.Count; i++)
             {
                 Console.WriteLine(i + 1 + ": " + allCategories[i].ToString());

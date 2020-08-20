@@ -66,6 +66,7 @@ namespace VideoMenu.DAL
             if (category != null)
             {
                 categories.Remove(category);
+                category.title = null;
                 return true;
             }
             return false;
