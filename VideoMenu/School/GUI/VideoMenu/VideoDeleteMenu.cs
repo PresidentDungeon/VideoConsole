@@ -6,10 +6,10 @@ using VideoMenu.Services;
 
 namespace VideoMenu.GUI
 {
-    class DeleteMenu : Menu
+    class VideoDeleteMenu : Menu
     {
         private IVideoService videoService;
-        public DeleteMenu() : base("Delete Menu", "Delete by ID", "Delete by selection")
+        public VideoDeleteMenu() : base("Delete Menu", "Delete by ID", "Delete by selection")
         {
             videoService = new VideoService();
             shouldCloseOnFinish = true;
@@ -66,7 +66,6 @@ namespace VideoMenu.GUI
                 Console.WriteLine((videoService.DeleteVideo(allVideos[selection - 1].id) ? "Video was successfully deleted!" : "Error - no such ID found"));
             }
         }
-
 
     }
 }

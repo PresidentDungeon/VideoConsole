@@ -63,5 +63,14 @@ namespace VideoMenu.DAL
             }
             return false;
         }
+
+        public bool DeleteCatoryAssignedToVideo(int id)
+        {
+            foreach (Video video in videos.Where(x => x.category.id == id))
+            {
+                video.category = null;
+            }
+            return true;
+        }
     }
 }

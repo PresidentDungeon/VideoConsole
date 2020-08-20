@@ -10,14 +10,19 @@ namespace VideoMenu.Services
     class VideoService : IVideoService
     {
         private VideoTable videoTable;
+        private CategoryTable categoryTable;
 
         public VideoService()
         {
             this.videoTable = VideoTable.GetInstance();
+            this.categoryTable = CategoryTable.GetInstance();
         }
 
         public Video CreateVideo()
         {
+
+            List<Category> allCategories = categoryTable.GetCategories();
+
             Console.WriteLine("\nEnter movie title:");
             string title = Console.ReadLine();
 
@@ -38,19 +43,33 @@ namespace VideoMenu.Services
             Console.WriteLine("\nEnter movie description:");
             string story = Console.ReadLine();
 
-            return new Video { title = title, releaseDate = releaseDate, story = story };
+            Console.WriteLine("\nSelect a valid category");
+
+
+
+            for (int i = 0; i < allCategories.Count; i++)
+            {
+                Console.WriteLine(i + 1 + ": " + allCategories[i].ToString());
+            }
+
+            int selection;
+
+            while (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > allCategories.Count)
+            {
+                Console.WriteLine($"Invalid input. Please choose an option in range (0-{allCategories.Count})");
+            }
+
+            return new Video { title = title, releaseDate = releaseDate, story = story, category = allCategories[selection-1] };
         }
-
-
 
         public void AddVideo()
         {
             videoTable.AddVideo(CreateVideo());
         }
 
-        public bool DeleteVideo(int id)
+        public List<Video> GetVideos()
         {
-            return videoTable.DeleteVideo(id);
+            return videoTable.GetVideos();
         }
 
         public Video GetVideoByID(int id)
@@ -119,14 +138,14 @@ namespace VideoMenu.Services
             return (from x in GetVideos() where x.releaseDate.Equals(date) select x).ToList();
         }
 
-        public List<Video> GetVideos()
-        {
-            return videoTable.GetVideos();
-        }
-
         public bool UpdateVideo(Video video)
         {
             return videoTable.UpdateVideo(video);
+        }
+
+        public bool DeleteVideo(int id)
+        {
+            return videoTable.DeleteVideo(id);
         }
     }
 }

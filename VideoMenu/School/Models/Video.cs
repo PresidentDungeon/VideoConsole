@@ -10,10 +10,11 @@ namespace VideoMenu.Models
         public string title { get; set; }
         public DateTime releaseDate { get; set; }
         public string story { get; set; }
+        public Category? category { get; set; }
 
         public override string ToString()
         {
-            return $"Id: {id} ({releaseDate.ToString("dd/MM/yyyy")}) {title}";
+            return (category != null) ? $"Id: {id} ({releaseDate.ToString("dd/MM/yyyy")}) {title}\n - {category.ToString()}" : $"Id: {id} ({releaseDate.ToString("dd/MM/yyyy")}) {title}\n - Unknown category";
         }
     }
 }

@@ -6,10 +6,10 @@ using VideoMenu.Services;
 
 namespace VideoMenu.GUI
 {
-    class SearchMenu : Menu
+    class VideoSearchMenu : Menu
     {
         private IVideoService videoService;
-        public SearchMenu() : base("Search Menu", "Search by ID", "Search by Title", "Search by Date")
+        public VideoSearchMenu() : base("Search Menu", "Search by ID", "Search by Title", "Search by Date")
         {
             videoService = new VideoService();
             shouldCloseOnFinish = true;
@@ -43,7 +43,7 @@ namespace VideoMenu.GUI
                 Console.WriteLine("\nPlease only enter a valid ID");
             }
             Video video = videoService.GetVideoByID(id);
-            Console.WriteLine((video != null) ? $"Found video:\n\nTitle: {video.title} ({video.id})\n\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\n\nStory: {video.story}" : "\nNo video was found");
+            Console.WriteLine((video != null) ? $"Found video:\n\nTitle: {video.title} ({video.id})\n\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\n\nStory: {video.story}\n\n{video.category}" : "\nNo video was found");
         }
 
         private void SearchByTitle()
@@ -61,7 +61,7 @@ namespace VideoMenu.GUI
                 Console.WriteLine("\nMatches are-----------------------\n");
                 foreach (Video video in foundVideos)
                 {
-                    Console.WriteLine($"\nTitle: {video.title} ({video.id})\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\nStory: {video.story}\n");
+                    Console.WriteLine($"\nTitle: {video.title} ({video.id})\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\nStory: {video.story}\nCategory: {video.category}\n");
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace VideoMenu.GUI
                 Console.WriteLine("\nMatches are-----------------------\n");
                 foreach (Video video in foundVideos)
                 {
-                    Console.WriteLine($"\nTitle: {video.title} ({video.id})\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\nStory: {video.story}\n");
+                    Console.WriteLine($"\nTitle: {video.title} ({video.id})\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\nStory: {video.story}\nCategory: {video.category}\n");
                 }
             }
         }
