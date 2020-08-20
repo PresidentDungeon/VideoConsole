@@ -15,8 +15,6 @@ namespace VideoMenu.GUI
             videoService = new VideoService();
         }
 
-
-
         protected override void DoAction(int option)
         {
             switch (option)
@@ -65,16 +63,10 @@ namespace VideoMenu.GUI
                 Console.WriteLine($"Invalid input. Please choose an option in range (0-{allVideos.Count})");
             }
 
-            if(selection == 0) 
-            {
-
-            }
-            else
+            if(selection > 0) 
             {
                 Console.WriteLine((videoService.DeleteVideo(allVideos[selection - 1].id) ? "Video was successfully deleted!" : "Error - no such ID found"));
             }
-
-
         }
 
 

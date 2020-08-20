@@ -34,11 +34,7 @@ namespace School.GUI
                     Pause();
                     break;
                 case 4:
-                    Console.WriteLine("Not implemented yet!!!");
-                    Pause();
-                    break;
-                case 5:
-                    Console.WriteLine("Not implemented yet!!!");
+                    Updatevideo();
                     Pause();
                     break;
                 default:
@@ -57,29 +53,38 @@ namespace School.GUI
 
         private void AddVideo()
         {
-            Console.WriteLine("\nEnter movie title:");
-            string title = Console.ReadLine();
-
-            while (title.Length <= 0)
-            {
-                Console.WriteLine("\nPlease enter a valid name");
-                title = Console.ReadLine();
-            }
-
-            Console.WriteLine("\nEnter release date:");
-            DateTime releaseDate;
-
-            while (!DateTime.TryParse(Console.ReadLine(), out releaseDate)) 
-            {
-                Console.WriteLine("Please enter a valid release date (dd/mm/yyyy)");
-            }
-
-            Console.WriteLine("\nEnter movie description:");
-            string story = Console.ReadLine();
-
-            videoService.AddVideo(title, releaseDate, story);
+            videoService.AddVideo();
             Console.WriteLine("\nVideo was successfully added!");
         }
 
+        private void Updatevideo()
+        {
+            List<Video> allVideos = videoService.GetVideos();
+
+            Console.WriteLine("\nPlease select which movie to update:");
+
+            for (int i = 0; i < allVideos.Count; i++)
+            {
+                Console.WriteLine(i + 1 + ": " + allVideos[i].ToString());
+            }
+
+            Console.WriteLine("\n0: Back");
+
+            int selection;
+
+            while (!int.TryParse(Console.ReadLine(), out selection) || selection < 0 || selection > allVideos.Count)
+            {
+                Console.WriteLine($"Invalid input. Please choose an option in range (0-{allVideos.Count})");
+            }
+
+            if (selection > 0)
+            {
+                Video video = videoService.CreateVideo();
+                video.id = allVideos[selection - 1].id;
+                Console.WriteLine((videoService.UpdateVideo(video) ? "Video was successfully updated!" : "Error updating video. Please try again."));
+            }
+
+
+        }
     }
 }

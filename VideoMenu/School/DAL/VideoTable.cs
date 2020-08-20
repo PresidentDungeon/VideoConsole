@@ -42,10 +42,12 @@ namespace VideoMenu.DAL
 
         public bool UpdateVideo(Video video)
         {
-            Video vid = videos.Where((x) => { return x.id == video.id; }).FirstOrDefault();
-            if (vid != null)
+
+            int index = videos.FindIndex((x) => { return x.id == video.id; });
+            //Video vid = videos.Where((x) => { return x.id == video.id; }).FirstOrDefault();
+            if (index != -1)
             {
-                vid = video;
+                videos[index] = video;
                 return true;
             }
             return false;

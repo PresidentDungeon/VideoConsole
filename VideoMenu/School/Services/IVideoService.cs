@@ -11,9 +11,9 @@ namespace VideoMenu.Services
 
         Video GetVideo(int id);
 
-        void AddVideo(string title, DateTime releaseDate, string story);
+        void AddVideo();
 
-        bool UpdateVideo(int id, string title, DateTime releaseDate, string story);
+        bool UpdateVideo(Video video);
 
         bool DeleteVideo(int id);
 

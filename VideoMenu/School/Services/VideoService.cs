@@ -15,14 +15,36 @@ namespace VideoMenu.Services
             this.videoTable = VideoTable.GetInstance();
         }
 
-        public void AddVideo(string title, DateTime releaseDate, string story)
-        {
-            videoTable.AddVideo(new Video { title = title, releaseDate = releaseDate, story = story });
-        }
-
         public Video CreateVideo()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nEnter movie title:");
+            string title = Console.ReadLine();
+
+            while (title.Length <= 0)
+            {
+                Console.WriteLine("\nPlease enter a valid name");
+                title = Console.ReadLine();
+            }
+
+            Console.WriteLine("\nEnter release date:");
+            DateTime releaseDate;
+
+            while (!DateTime.TryParse(Console.ReadLine(), out releaseDate))
+            {
+                Console.WriteLine("Please enter a valid release date (dd/mm/yyyy)");
+            }
+
+            Console.WriteLine("\nEnter movie description:");
+            string story = Console.ReadLine();
+
+            return new Video { title = title, releaseDate = releaseDate, story = story };
+        }
+
+
+
+        public void AddVideo()
+        {
+            videoTable.AddVideo(CreateVideo());
         }
 
         public bool DeleteVideo(int id)
@@ -40,9 +62,9 @@ namespace VideoMenu.Services
             return videoTable.GetVideos();
         }
 
-        public bool UpdateVideo(int id, string title, DateTime releaseDate, string story)
+        public bool UpdateVideo(Video video)
         {
-            return videoTable.UpdateVideo(new Video { id = id, title = title, releaseDate = releaseDate, story = story }); 
+            return videoTable.UpdateVideo(video); 
         }
     }
 }
