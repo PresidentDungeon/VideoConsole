@@ -2,40 +2,77 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using VideoMenu.DAL;
-using VideoMenu.Models;
+using VideoMenu.Core.DomainService;
+using VideoMenu.Core.Entity;
 
-namespace VideoMenu.Services
+namespace VideoMenu.Infrastructure.Static.Data.Repositories
 {
-    class VideoService : IVideoService
+    public class VideoRepository : IVideoRepository
     {
-        private VideoTable videoTable;
-        private CategoryTable categoryTable;
+        private int id;
+        private List<Video> videos;
+        private static VideoRepository videoRespository;
 
-        public VideoService()
+        private VideoRepository()
         {
-            this.videoTable = VideoTable.GetInstance();
-            this.categoryTable = CategoryTable.GetInstance();
+            this.id = 0;
+            this.videos = new List<Video>();
         }
 
-        public Video CreateVideo(string title, DateTime releaseDate, string story, Category category)
+        public static VideoRepository GetInstance()
         {
-            return new Video { title = title, releaseDate = releaseDate, story = story, category = category};
+            return videoRespository ??= new VideoRepository();
         }
 
         public void AddVideo(Video video)
         {
-            videoTable.AddVideo(video);
+            id++;
+            video.id = id;
+            videos.Add(video);
         }
 
         public List<Video> GetVideos()
         {
-            return videoTable.GetVideos();
+            return this.videos;
         }
+
+        public bool UpdateVideo(Video video)
+        {
+            int index = videos.FindIndex((x) => { return x.id == video.id; });
+            //Video vid = videos.Where((x) => { return x.id == video.id; }).FirstOrDefault();
+            if (index != -1)
+            {
+                videos[index] = video;
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteVideo(int id)
+        {
+            Video video = videos.Where((x) => { return x.id == id; }).FirstOrDefault();
+            if (video != null)
+            {
+                videos.Remove(video);
+                return true;
+            }
+            return false;
+        }
+
+        private void CreateInitialData()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
 
         public Video GetVideoByID(int id)
         {
-            return videoTable.GetVideo(id);
+            return videos.Where((x) => { return x.id == id; }).FirstOrDefault();
         }
 
         public List<Video> GetVideoByTitle(string searchTitle)
@@ -97,16 +134,6 @@ namespace VideoMenu.Services
         public List<Video> GetVideoByDate(DateTime date)
         {
             return (from x in GetVideos() where x.releaseDate.Equals(date) select x).ToList();
-        }
-
-        public bool UpdateVideo(Video video)
-        {
-            return videoTable.UpdateVideo(video);
-        }
-
-        public bool DeleteVideo(int id)
-        {
-            return videoTable.DeleteVideo(id);
         }
     }
 }

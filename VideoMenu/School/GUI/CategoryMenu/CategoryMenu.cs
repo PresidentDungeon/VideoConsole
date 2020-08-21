@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VideoMenu.Models;
-using VideoMenu.Services;
+using VideoMenu.Core.DomainService;
+using VideoMenu.Core.Entity;
+using VideoMenu.Infrastructure.Static.Data.Repositories;
 
-namespace VideoMenu.GUI.CategoryMenu
+namespace VideoMenu.GUI
 {
     class CategoryMenu : Menu
     {
-        ICategoryService categoryService;
-
+        ICategoryRepository categoryRepository;
 
         public CategoryMenu() : base("Category Menu", "View Categories", "Add Category", "Remove Category", "Update Category")
         {
-            categoryService = new CategoryService();
+            categoryRepository = CategoryRepository.GetInstance();
         }
 
         protected override void DoAction(int option)
@@ -52,13 +52,13 @@ namespace VideoMenu.GUI.CategoryMenu
                 title = Console.ReadLine();
             }
 
-            return categoryService.CreateCategory(title);
+            return new Category { title = title };
         }
 
         private void ShowAllCategories()
         {
             Console.WriteLine("All registered categories are: \n");
-            foreach (Category category in categoryService.GetCategories())
+            foreach (Category category in categoryRepository.GetCategories())
             {
                 Console.WriteLine(category);
             }
@@ -66,13 +66,13 @@ namespace VideoMenu.GUI.CategoryMenu
 
         private void AddCategory()
         {
-            categoryService.AddCategory(CreateCategory());
+            categoryRepository.AddCategory(CreateCategory());
             Console.WriteLine("\nCategory was successfully added!");
         }
 
         private void UpdateCategory()
         {
-            List<Category> allCategories = categoryService.GetCategories();
+            List<Category> allCategories = categoryRepository.GetCategories();
 
             Console.WriteLine("\nPlease select which category to update:");
 
@@ -94,13 +94,13 @@ namespace VideoMenu.GUI.CategoryMenu
             {
                 Category category = CreateCategory();
                 category.id = allCategories[selection - 1].id;
-                Console.WriteLine((categoryService.UpdateCategory(category) ? "Category was successfully updated!" : "Error updating category. Please try again."));
+                Console.WriteLine((categoryRepository.UpdateCategory(category) ? "Category was successfully updated!" : "Error updating category. Please try again."));
             }
         }
 
         private void DeleteCategoryBySelection()
         {
-            List<Category> allCategories = categoryService.GetCategories();
+            List<Category> allCategories = categoryRepository.GetCategories();
 
             Console.WriteLine("\nPlease select which category to delete:");
 
@@ -120,7 +120,7 @@ namespace VideoMenu.GUI.CategoryMenu
 
             if (selection > 0)
             {
-                Console.WriteLine((categoryService.DeleteCategory(allCategories[selection - 1].id) ? "Category was successfully deleted!" : "Error - no such ID found"));
+                Console.WriteLine((categoryRepository.DeleteCategory(allCategories[selection - 1].id) ? "Category was successfully deleted!" : "Error - no such ID found"));
             }
         }
     }

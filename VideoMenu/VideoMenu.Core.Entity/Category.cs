@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VideoMenu.Models
+namespace VideoMenu.Core.Entity
 {
-    class Category
+   public class Category
     {
         public int id { get; set; }
         public string title { get; set; }

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ApplicationService\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VideoMenu.Core.Entity\VideoMenu.Core.Entity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VideoMenu.Core.Entity">
+      <HintPath>..\VideoMenu.Core.Entity\obj\Debug\netstandard2.0\VideoMenu.Core.Entity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

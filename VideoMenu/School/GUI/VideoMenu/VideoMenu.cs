@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using VideoMenu.Models;
-using VideoMenu.Services;
+using VideoMenu.Core.DomainService;
+using VideoMenu.Core.Entity;
+using VideoMenu.Infrastructure.Static.Data.Repositories;
 
 namespace VideoMenu.GUI
 {
     class VideoMenu : Menu
     {
-        private IVideoService videoService;
-        private ICategoryService categoryService;
+        private IVideoRepository videoRepository;
+        private ICategoryRepository categoryRepository;
 
         public VideoMenu() : base("Video Menu", "View Videos", "Search video", "Add Video", "Remove Video", "Update Video")
         {
-            videoService = new VideoService();
-            categoryService = new CategoryService();
+            videoRepository = VideoRepository.GetInstance();
+            categoryRepository = CategoryRepository.GetInstance();
         }
 
         protected override void DoAction(int option)
@@ -48,7 +48,7 @@ namespace VideoMenu.GUI
 
         private Video CreateVideo()
         {
-            List<Category> allCategories = categoryService.GetCategories();
+            List<Category> allCategories = categoryRepository.GetCategories();
 
             Console.WriteLine("\nEnter movie title:");
             string title = Console.ReadLine();
@@ -84,15 +84,13 @@ namespace VideoMenu.GUI
                 Console.WriteLine($"Invalid input. Please choose an option in range (0-{allCategories.Count})");
             }
 
-           return videoService.CreateVideo(title, releaseDate, story, allCategories[selection - 1]);
+           return new Video { title = title, releaseDate = releaseDate, story = story, category = allCategories[selection - 1]};
         }
-
-
 
         private void ShowAllVideos()
         {
             Console.WriteLine("All registered videos are: \n");
-            foreach (Video video in videoService.GetVideos())
+            foreach (Video video in videoRepository.GetVideos())
             {
                 Console.WriteLine(video);
             }
@@ -100,13 +98,13 @@ namespace VideoMenu.GUI
 
         private void AddVideo()
         {
-            videoService.AddVideo(CreateVideo());
+            videoRepository.AddVideo(CreateVideo());
             Console.WriteLine("\nVideo was successfully added!");
         }
 
         private void Updatevideo()
         {
-            List<Video> allVideos = videoService.GetVideos();
+            List<Video> allVideos = videoRepository.GetVideos();
 
             Console.WriteLine("\nPlease select which movie to update:");
 
@@ -128,7 +126,7 @@ namespace VideoMenu.GUI
             {
                 Video video = CreateVideo();
                 video.id = allVideos[selection - 1].id;
-                Console.WriteLine((videoService.UpdateVideo(video) ? "Video was successfully updated!" : "Error updating video. Please try again."));
+                Console.WriteLine((videoRepository.UpdateVideo(video) ? "Video was successfully updated!" : "Error updating video. Please try again."));
             }
         }
     }

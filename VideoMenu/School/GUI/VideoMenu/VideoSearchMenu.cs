@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VideoMenu.Models;
-using VideoMenu.Services;
+using VideoMenu.Core.DomainService;
+using VideoMenu.Core.Entity;
+using VideoMenu.Infrastructure.Static.Data.Repositories;
 
 namespace VideoMenu.GUI
 {
     class VideoSearchMenu : Menu
     {
-        private IVideoService videoService;
+        private IVideoRepository videoRepository;
         public VideoSearchMenu() : base("Search Menu", "Search by ID", "Search by Title", "Search by Date")
         {
-            videoService = new VideoService();
+            videoRepository = VideoRepository.GetInstance();
             shouldCloseOnFinish = true;
         }
 
@@ -42,14 +43,14 @@ namespace VideoMenu.GUI
             {
                 Console.WriteLine("\nPlease only enter a valid ID");
             }
-            Video video = videoService.GetVideoByID(id);
+            Video video = videoRepository.GetVideoByID(id);
             Console.WriteLine((video != null) ? $"Found video:\n\nTitle: {video.title} ({video.id})\n\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\n\nStory: {video.story}\n\n{video.category}" : "\nNo video was found");
         }
 
         private void SearchByTitle()
         {
             Console.WriteLine("\nPlease enter a title (use % to break title):");
-            List<Video> foundVideos = videoService.GetVideoByTitle(Console.ReadLine());
+            List<Video> foundVideos = videoRepository.GetVideoByTitle(Console.ReadLine());
             
             if(foundVideos.Count == 0)
             {
@@ -76,7 +77,7 @@ namespace VideoMenu.GUI
                 Console.WriteLine("Please enter a valid release date (dd/mm/yyyy)");
             }
 
-            List<Video> foundVideos = videoService.GetVideoByDate(releaseDate);
+            List<Video> foundVideos = videoRepository.GetVideoByDate(releaseDate);
 
             if (foundVideos.Count == 0)
             {
@@ -92,13 +93,5 @@ namespace VideoMenu.GUI
                 }
             }
         }
-
-
-
-
-
-
-
-
     }
 }

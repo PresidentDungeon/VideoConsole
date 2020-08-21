@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VideoMenu.GUI
+namespace VideoMenu.Core.Entity
 {
-    abstract class Menu
+   public abstract class Menu
     {
         private int EXIT_OPTION = 0;
         protected bool shouldCloseOnFinish = false;

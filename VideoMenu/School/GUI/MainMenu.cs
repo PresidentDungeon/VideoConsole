@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using VideoMenu.GUI.CategoryMenu;
-using VideoMenu.Models;
-using VideoMenu.Services;
+using VideoMenu.Core.Entity;
+using VideoMenu.GUI;
 
 namespace VideoMenu.GUI
 {
@@ -23,7 +22,7 @@ namespace VideoMenu.GUI
                     new VideoMenu().Run();
                     break;
                 case 2:
-                    new CategoryMenu.CategoryMenu().Run();
+                    new CategoryMenu().Run();
                     break;
                 default:
                     break;
