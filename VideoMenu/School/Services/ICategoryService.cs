@@ -8,10 +8,10 @@ namespace VideoMenu.Services
     interface ICategoryService
     {
         List<Category> GetCategories();
-        void AddCategory();
+        void AddCategory(Category category);
         bool UpdateCategory(Category category);
         bool DeleteCategory(int id);
-        Category CreateCategory();
+        Category CreateCategory(string title);
 
 
     }

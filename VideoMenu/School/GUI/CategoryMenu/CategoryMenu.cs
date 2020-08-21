@@ -41,6 +41,20 @@ namespace VideoMenu.GUI.CategoryMenu
             }
         }
 
+        private Category CreateCategory()
+        {
+            Console.WriteLine("\nEnter category title:");
+            string title = Console.ReadLine();
+
+            while (title.Length <= 0)
+            {
+                Console.WriteLine("\nPlease enter a valid name");
+                title = Console.ReadLine();
+            }
+
+            return categoryService.CreateCategory(title);
+        }
+
         private void ShowAllCategories()
         {
             Console.WriteLine("All registered categories are: \n");
@@ -52,7 +66,7 @@ namespace VideoMenu.GUI.CategoryMenu
 
         private void AddCategory()
         {
-            categoryService.AddCategory();
+            categoryService.AddCategory(CreateCategory());
             Console.WriteLine("\nCategory was successfully added!");
         }
 
@@ -78,7 +92,7 @@ namespace VideoMenu.GUI.CategoryMenu
 
             if (selection > 0)
             {
-                Category category = categoryService.CreateCategory();
+                Category category = CreateCategory();
                 category.id = allCategories[selection - 1].id;
                 Console.WriteLine((categoryService.UpdateCategory(category) ? "Category was successfully updated!" : "Error updating category. Please try again."));
             }

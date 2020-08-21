@@ -9,10 +9,12 @@ namespace VideoMenu.GUI
     class VideoMenu : Menu
     {
         private IVideoService videoService;
+        private ICategoryService categoryService;
 
         public VideoMenu() : base("Video Menu", "View Videos", "Search video", "Add Video", "Remove Video", "Update Video")
         {
             videoService = new VideoService();
+            categoryService = new CategoryService();
         }
 
         protected override void DoAction(int option)
@@ -44,6 +46,49 @@ namespace VideoMenu.GUI
             }
         }
 
+        private Video CreateVideo()
+        {
+            List<Category> allCategories = categoryService.GetCategories();
+
+            Console.WriteLine("\nEnter movie title:");
+            string title = Console.ReadLine();
+
+            while (title.Length <= 0)
+            {
+                Console.WriteLine("\nPlease enter a valid name");
+                title = Console.ReadLine();
+            }
+
+            Console.WriteLine("\nEnter release date:");
+            DateTime releaseDate;
+
+            while (!DateTime.TryParse(Console.ReadLine(), out releaseDate))
+            {
+                Console.WriteLine("Please enter a valid release date (dd/mm/yyyy)");
+            }
+
+            Console.WriteLine("\nEnter movie description:");
+            string story = Console.ReadLine();
+
+            Console.WriteLine("\nSelect a valid category");
+
+            for (int i = 0; i < allCategories.Count; i++)
+            {
+                Console.WriteLine(i + 1 + ": " + allCategories[i].ToString());
+            }
+
+            int selection;
+
+            while (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > allCategories.Count)
+            {
+                Console.WriteLine($"Invalid input. Please choose an option in range (0-{allCategories.Count})");
+            }
+
+           return videoService.CreateVideo(title, releaseDate, story, allCategories[selection - 1]);
+        }
+
+
+
         private void ShowAllVideos()
         {
             Console.WriteLine("All registered videos are: \n");
@@ -55,7 +100,7 @@ namespace VideoMenu.GUI
 
         private void AddVideo()
         {
-            videoService.AddVideo();
+            videoService.AddVideo(CreateVideo());
             Console.WriteLine("\nVideo was successfully added!");
         }
 
@@ -81,7 +126,7 @@ namespace VideoMenu.GUI
 
             if (selection > 0)
             {
-                Video video = videoService.CreateVideo();
+                Video video = CreateVideo();
                 video.id = allVideos[selection - 1].id;
                 Console.WriteLine((videoService.UpdateVideo(video) ? "Video was successfully updated!" : "Error updating video. Please try again."));
             }

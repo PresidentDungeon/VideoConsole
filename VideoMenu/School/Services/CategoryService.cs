@@ -17,23 +17,14 @@ namespace VideoMenu.Services
             this.videoTable = VideoTable.GetInstance();
         }
 
-        public Category CreateCategory()
+        public Category CreateCategory(string title)
         {
-            Console.WriteLine("\nEnter category title:");
-            string title = Console.ReadLine();
-
-            while (title.Length <= 0)
-            {
-                Console.WriteLine("\nPlease enter a valid name");
-                title = Console.ReadLine();
-            }
-
             return new Category { title = title};
         }
 
-        public void AddCategory()
+        public void AddCategory(Category category)
         {
-            categoryTable.AddCategory(CreateCategory());
+            categoryTable.AddCategory(category);
         }
 
         public List<Category> GetCategories()

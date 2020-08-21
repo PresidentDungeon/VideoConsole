@@ -11,10 +11,10 @@ namespace VideoMenu.Services
         Video GetVideoByID(int id);
         List<Video> GetVideoByTitle(string searchTitle);
         List<Video> GetVideoByDate(DateTime date);
-        void AddVideo();
+        void AddVideo(Video video);
         bool UpdateVideo(Video video);
         bool DeleteVideo(int id);
-        Video CreateVideo();
+        Video CreateVideo(string title, DateTime releaseDate, string story, Category category);
 
     }
 }

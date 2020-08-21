@@ -18,51 +18,14 @@ namespace VideoMenu.Services
             this.categoryTable = CategoryTable.GetInstance();
         }
 
-        public Video CreateVideo()
+        public Video CreateVideo(string title, DateTime releaseDate, string story, Category category)
         {
-
-            List<Category> allCategories = categoryTable.GetCategories();
-
-            Console.WriteLine("\nEnter movie title:");
-            string title = Console.ReadLine();
-
-            while (title.Length <= 0)
-            {
-                Console.WriteLine("\nPlease enter a valid name");
-                title = Console.ReadLine();
-            }
-
-            Console.WriteLine("\nEnter release date:");
-            DateTime releaseDate;
-
-            while (!DateTime.TryParse(Console.ReadLine(), out releaseDate))
-            {
-                Console.WriteLine("Please enter a valid release date (dd/mm/yyyy)");
-            }
-
-            Console.WriteLine("\nEnter movie description:");
-            string story = Console.ReadLine();
-
-            Console.WriteLine("\nSelect a valid category");
-
-            for (int i = 0; i < allCategories.Count; i++)
-            {
-                Console.WriteLine(i + 1 + ": " + allCategories[i].ToString());
-            }
-
-            int selection;
-
-            while (!int.TryParse(Console.ReadLine(), out selection) || selection < 1 || selection > allCategories.Count)
-            {
-                Console.WriteLine($"Invalid input. Please choose an option in range (0-{allCategories.Count})");
-            }
-
-            return new Video { title = title, releaseDate = releaseDate, story = story, category = allCategories[selection-1] };
+            return new Video { title = title, releaseDate = releaseDate, story = story, category = category};
         }
 
-        public void AddVideo()
+        public void AddVideo(Video video)
         {
-            videoTable.AddVideo(CreateVideo());
+            videoTable.AddVideo(video);
         }
 
         public List<Video> GetVideos()
