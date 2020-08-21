@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VideoMenu.Core.ApplicationService;
 using VideoMenu.Core.DomainService;
 using VideoMenu.Core.Entity;
 using VideoMenu.Infrastructure.Static.Data.Repositories;
@@ -9,10 +10,10 @@ namespace VideoMenu.GUI
 {
     class VideoDeleteMenu : Menu
     {
-        private IVideoRepository videoRepository;
-        public VideoDeleteMenu() : base("Delete Menu", "Delete by ID", "Delete by selection")
+        private IVideoService videoService;
+        public VideoDeleteMenu(IVideoService videoService) : base("Delete Menu", "Delete by ID", "Delete by selection")
         {
-            videoRepository = VideoRepository.GetInstance();
+            this.videoService = videoService;
             shouldCloseOnFinish = true;
         }
 
@@ -39,12 +40,12 @@ namespace VideoMenu.GUI
             {
                 Console.WriteLine("Please only enter a valid ID");
             }
-            Console.WriteLine((videoRepository.DeleteVideo(id) ? "Video was successfully deleted!" : "Error - no such ID found"));
+            Console.WriteLine((videoService.DeleteVideo(id) ? "Video was successfully deleted!" : "Error - no such ID found"));
         }
 
         private void DeleteBySelection()
         {
-            List<Video> allVideos = videoRepository.GetVideos();
+            List<Video> allVideos = videoService.GetAllVideos();
 
             Console.WriteLine("\nPlease select which movie to delete:");
 
@@ -64,7 +65,7 @@ namespace VideoMenu.GUI
 
             if(selection > 0) 
             {
-                Console.WriteLine((videoRepository.DeleteVideo(allVideos[selection - 1].id) ? "Video was successfully deleted!" : "Error - no such ID found"));
+                Console.WriteLine((videoService.DeleteVideo(allVideos[selection - 1].id) ? "Video was successfully deleted!" : "Error - no such ID found"));
             }
         }
 

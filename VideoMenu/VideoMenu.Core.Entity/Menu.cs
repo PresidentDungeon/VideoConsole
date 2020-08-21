@@ -82,6 +82,11 @@ namespace VideoMenu.Core.Entity
             Console.WriteLine("0: Exit");
         }
 
+        protected void Print(string stringToPrint)
+        {
+            Console.WriteLine(stringToPrint);
+        }
+
         protected void Pause()
         {
             Console.WriteLine("Press any key to continue...");

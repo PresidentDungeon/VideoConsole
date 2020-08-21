@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VideoMenu.Core.ApplicationService;
 using VideoMenu.Core.DomainService;
 using VideoMenu.Core.Entity;
 using VideoMenu.Infrastructure.Static.Data.Repositories;
@@ -9,10 +10,10 @@ namespace VideoMenu.GUI
 {
     class VideoSearchMenu : Menu
     {
-        private IVideoRepository videoRepository;
-        public VideoSearchMenu() : base("Search Menu", "Search by ID", "Search by Title", "Search by Date")
+        private IVideoService videoService;
+        public VideoSearchMenu(IVideoService videoService) : base("Search Menu", "Search by ID", "Search by Title", "Search by Date")
         {
-            videoRepository = VideoRepository.GetInstance();
+            this.videoService = videoService;
             shouldCloseOnFinish = true;
         }
 
@@ -43,14 +44,14 @@ namespace VideoMenu.GUI
             {
                 Console.WriteLine("\nPlease only enter a valid ID");
             }
-            Video video = videoRepository.GetVideoByID(id);
+            Video video = videoService.GetVideoByID(id);
             Console.WriteLine((video != null) ? $"Found video:\n\nTitle: {video.title} ({video.id})\n\nRelease: {video.releaseDate.ToString("dd/MM/yyyy")}\n\nStory: {video.story}\n\n{video.category}" : "\nNo video was found");
         }
 
         private void SearchByTitle()
         {
             Console.WriteLine("\nPlease enter a title (use % to break title):");
-            List<Video> foundVideos = videoRepository.GetVideoByTitle(Console.ReadLine());
+            List<Video> foundVideos = videoService.GetVideoByTitle(Console.ReadLine());
             
             if(foundVideos.Count == 0)
             {
@@ -77,7 +78,7 @@ namespace VideoMenu.GUI
                 Console.WriteLine("Please enter a valid release date (dd/mm/yyyy)");
             }
 
-            List<Video> foundVideos = videoRepository.GetVideoByDate(releaseDate);
+            List<Video> foundVideos = videoService.GetVideoByDate(releaseDate);
 
             if (foundVideos.Count == 0)
             {
