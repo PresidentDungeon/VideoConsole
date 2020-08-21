@@ -20,11 +20,6 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
             CreateInitialData();
         }
 
-        public static CategoryRepository GetInstance()
-        {
-            return categoryRepository ??= new CategoryRepository();
-        }
-
         public void AddCategory(Category category)
         {
             id++;

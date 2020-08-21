@@ -17,12 +17,6 @@ namespace School
     {
         static void Main(string[] args)
         {
-            //IVideoRepository videoRepository = VideoRepository.GetInstance();
-            //ICategoryRepository categoryRepository= CategoryRepository.GetInstance();
-
-            //IVideoService videoService = new VideoService(videoRepository);
-            //ICategoryService categoryService = new CategoryService(categoryRepository);
-
             ServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<IVideoRepository, VideoRepository>();
             serviceCollection.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -30,14 +24,39 @@ namespace School
             serviceCollection.AddScoped<ICategoryService, CategoryService>();
 
             serviceCollection.AddScoped<MainMenu>();
+            serviceCollection.AddScoped<VideoMenu.GUI.VideoMenu>();
             serviceCollection.AddScoped<VideoDeleteMenu>();
+            serviceCollection.AddScoped<VideoSearchMenu>();
+            serviceCollection.AddScoped<CategoryMenu>();
 
+
+            serviceCollection.AddScoped<Video>();
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            var mainMenu = serviceProvider.GetRequiredService<MainMenu>();
-            mainMenu.Run();
 
-            //MainMenu mainMenu = new MainMenu(videoService, categoryService);
+            Video video = serviceProvider.GetRequiredService<Video>();
+            video.title = "test";
+            Console.WriteLine(video.title);
+
+            Video video2 = serviceProvider.GetRequiredService<Video>();
+            Console.WriteLine(video2.title);
+
+            video2.title = "something else";
+
+
+            Console.ReadLine();
+            Console.WriteLine(video.title);
+            Console.WriteLine(video2.title);
+
+
+
+
+            //var serviceProvider = serviceCollection.BuildServiceProvider();
+            //var mainMenu = serviceProvider.GetRequiredService<MainMenu>();
             //mainMenu.Run();
+
+
+
+
 
         }
     }

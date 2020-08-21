@@ -19,11 +19,6 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
             this.videos = new List<Video>();
         }
 
-        public static VideoRepository GetInstance()
-        {
-            return videoRespository ??= new VideoRepository();
-        }
-
         public void AddVideo(Video video)
         {
             id++;
@@ -39,7 +34,6 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
         public bool UpdateVideo(Video video)
         {
             int index = videos.FindIndex((x) => { return x.id == video.id; });
-            //Video vid = videos.Where((x) => { return x.id == video.id; }).FirstOrDefault();
             if (index != -1)
             {
                 videos[index] = video;

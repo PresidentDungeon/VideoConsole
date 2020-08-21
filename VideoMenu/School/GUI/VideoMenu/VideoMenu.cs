@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using VideoMenu.Core.ApplicationService;
 using VideoMenu.Core.DomainService;
@@ -11,11 +12,13 @@ namespace VideoMenu.GUI
     {
         private IVideoService videoService;
         private ICategoryService categoryService;
+        private IServiceProvider serviceProvider;
 
-        public VideoMenu(IVideoService videoService, ICategoryService categoryService) : base("Video Menu", "View Videos", "Search video", "Add Video", "Remove Video", "Update Video")
+        public VideoMenu(IVideoService videoService, ICategoryService categoryService, IServiceProvider serviceProvider) : base("Video Menu", "View Videos", "Search video", "Add Video", "Remove Video", "Update Video")
         {
             this.videoService = videoService;
             this.categoryService = categoryService;
+            this.serviceProvider = serviceProvider;
         }
 
         protected override void DoAction(int option)
@@ -27,7 +30,7 @@ namespace VideoMenu.GUI
                     Pause();
                     break;
                 case 2:
-                    new VideoSearchMenu(videoService).Run();
+                    serviceProvider.GetRequiredService<VideoSearchMenu>().Run();
                     Pause();
                     break;
                 case 3:
@@ -35,7 +38,7 @@ namespace VideoMenu.GUI
                     Pause();
                     break;
                 case 4:
-                    new VideoDeleteMenu(videoService).Run();
+                    serviceProvider.GetRequiredService<VideoDeleteMenu>().Run();
                     Pause();
                     break;
                 case 5:
