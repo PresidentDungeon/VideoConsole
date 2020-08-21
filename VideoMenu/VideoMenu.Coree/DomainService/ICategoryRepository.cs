@@ -7,7 +7,7 @@ namespace VideoMenu.Core.DomainService
     public interface ICategoryRepository
     {
         void AddCategory(Category category);
-        List<Category> GetCategories();
+        IEnumerable<Category> GetCategories();
         bool UpdateCategory(Category category);
         bool DeleteCategory(int id);
     }

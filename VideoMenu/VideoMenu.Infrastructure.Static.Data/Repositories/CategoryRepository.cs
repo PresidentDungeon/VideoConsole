@@ -13,7 +13,7 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
         private List<Category> categories;
         private static CategoryRepository categoryRepository;
 
-        private CategoryRepository()
+        public CategoryRepository()
         {
             id = 0;
             categories = new List<Category>();
@@ -32,7 +32,7 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
             categories.Add(category);
         }
 
-        public List<Category> GetCategories()
+        public IEnumerable<Category> GetCategories()
         {
             return this.categories;
         }

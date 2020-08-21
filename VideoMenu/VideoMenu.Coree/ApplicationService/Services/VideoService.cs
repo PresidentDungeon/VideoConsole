@@ -27,7 +27,7 @@ namespace VideoMenu.Core.ApplicationService.Services
 
         public List<Video> GetAllVideos()
         {
-            return videoRepository.GetVideos();
+            return videoRepository.GetVideos().ToList();
         }
 
         public Video GetVideoByID(int id)
@@ -96,8 +96,9 @@ namespace VideoMenu.Core.ApplicationService.Services
             return (from x in GetAllVideos() where x.releaseDate.Equals(date) select x).ToList();
         }
 
-        public bool UpdateVideo(Video video)
+        public bool UpdateVideo(Video video, int id)
         {
+            video.id = id;
             return videoRepository.UpdateVideo(video);
         }
 

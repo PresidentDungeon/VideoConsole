@@ -13,7 +13,7 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
         private List<Video> videos;
         private static VideoRepository videoRespository;
 
-        private VideoRepository()
+        public VideoRepository()
         {
             this.id = 0;
             this.videos = new List<Video>();
@@ -31,7 +31,7 @@ namespace VideoMenu.Infrastructure.Static.Data.Repositories
             videos.Add(video);
         }
 
-        public List<Video> GetVideos()
+        public IEnumerable<Video> GetVideos()
         {
             return this.videos;
         }

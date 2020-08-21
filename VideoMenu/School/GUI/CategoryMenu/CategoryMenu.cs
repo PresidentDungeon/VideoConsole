@@ -52,7 +52,7 @@ namespace VideoMenu.GUI
                 title = Console.ReadLine();
             }
 
-            return categoryService.CreateCategory(title);)
+            return categoryService.CreateCategory(title);
         }
 
         private void ShowAllCategories()
@@ -92,9 +92,7 @@ namespace VideoMenu.GUI
 
             if (selection > 0)
             {
-                Category category = CreateCategory();
-                category.id = allCategories[selection - 1].id;
-                Console.WriteLine((categoryService.UpdateCategory(category) ? "Category was successfully updated!" : "Error updating category. Please try again."));
+                Console.WriteLine((categoryService.UpdateCategory(CreateCategory(), allCategories[selection - 1].id) ? "Category was successfully updated!" : "Error updating category. Please try again."));
             }
         }
 

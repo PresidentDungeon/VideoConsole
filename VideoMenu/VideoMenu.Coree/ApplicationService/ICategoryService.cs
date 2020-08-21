@@ -10,7 +10,7 @@ namespace VideoMenu.Core.ApplicationService
         Category CreateCategory(string title);
         void AddCategory(Category category);
         List<Category> GetCategories();
-        bool UpdateCategory(Category category);
+        bool UpdateCategory(Category category, int id);
         bool DeleteCategory(int id);
 
     }

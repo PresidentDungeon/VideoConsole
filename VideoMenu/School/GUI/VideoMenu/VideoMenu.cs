@@ -31,11 +31,11 @@ namespace VideoMenu.GUI
                     Pause();
                     break;
                 case 3:
-                    CreateVideo();
+                    AddVideo(CreateVideo());
                     Pause();
                     break;
                 case 4:
-                    new VideoDeleteMenu(categoryService).Run();
+                    new VideoDeleteMenu(videoService).Run();
                     Pause();
                     break;
                 case 5:
@@ -85,10 +85,13 @@ namespace VideoMenu.GUI
                 Console.WriteLine($"Invalid input. Please choose an option in range (0-{allCategories.Count})");
             }
 
-            Video video = videoService.CreateVideo(title, releaseDate, story, allCategories[selection - 1]);
+            return videoService.CreateVideo(title, releaseDate, story, allCategories[selection - 1]);
+        }
+
+        private void AddVideo(Video video)
+        {
             videoService.AddVideo(video);
             Console.WriteLine("\nVideo was successfully added!");
-            return video;
         }
 
         private void ShowAllVideos()
@@ -122,9 +125,7 @@ namespace VideoMenu.GUI
 
             if (selection > 0)
             {
-                Video video = CreateVideo();
-                video.id = allVideos[selection - 1].id;
-                Console.WriteLine((videoService.UpdateVideo(video)) ? "Video was successfully updated!" : "Error updating video. Please try again."));
+                Console.WriteLine((videoService.UpdateVideo(CreateVideo(), allVideos[selection - 1].id)) ? "Video was successfully updated!" : "Error updating video. Please try again.");
                 
             }
         }

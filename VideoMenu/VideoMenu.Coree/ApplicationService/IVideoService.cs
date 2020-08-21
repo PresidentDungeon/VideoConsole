@@ -21,7 +21,7 @@ namespace VideoMenu.Core.ApplicationService
 
         List<Video> GetVideoByDate(DateTime date);
 
-        bool UpdateVideo(Video video);
+        bool UpdateVideo(Video video, int id);
 
         bool DeleteVideo(int id);
 

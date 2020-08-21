@@ -8,7 +8,7 @@ namespace VideoMenu.Core.DomainService
     public interface IVideoRepository
     {
         void AddVideo(Video video);
-        List<Video> GetVideos();
+        IEnumerable<Video> GetVideos();
         bool UpdateVideo(Video video);
         bool DeleteVideo(int id);
     }

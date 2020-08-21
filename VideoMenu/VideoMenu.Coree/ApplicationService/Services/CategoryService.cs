@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VideoMenu.Core.DomainService;
 using VideoMenu.Core.Entity;
@@ -27,11 +28,12 @@ namespace VideoMenu.Core.ApplicationService.Services
 
         public List<Category> GetCategories()
         {
-            return categoryRepository.GetCategories();
+            return categoryRepository.GetCategories().ToList();
         }
 
-        public bool UpdateCategory(Category category)
+        public bool UpdateCategory(Category category, int id)
         {
+            category.id = id;
             return categoryRepository.UpdateCategory(category);
         }
 
