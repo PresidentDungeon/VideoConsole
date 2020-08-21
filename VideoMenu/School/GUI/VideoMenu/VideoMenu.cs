@@ -30,6 +30,7 @@ namespace VideoMenu.GUI
                     Pause();
                     break;
                 case 2:
+                    //new VideoSearchMenu(videoService).Run();
                     serviceProvider.GetRequiredService<VideoSearchMenu>().Run();
                     Pause();
                     break;
@@ -38,7 +39,8 @@ namespace VideoMenu.GUI
                     Pause();
                     break;
                 case 4:
-                    serviceProvider.GetRequiredService<VideoDeleteMenu>().Run();
+                    //new VideoDeleteMenu(videoService).Run();
+                    serviceProvider.GetRequiredService<VideoSearchMenu>().Run();
                     Pause();
                     break;
                 case 5:

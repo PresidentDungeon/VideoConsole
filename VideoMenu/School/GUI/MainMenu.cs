@@ -13,12 +13,14 @@ namespace VideoMenu.GUI
 {
     class MainMenu : Menu
     {
-
+        private IVideoService videoService;
+        private ICategoryService categoryService;
         private IServiceProvider serviceProvider;
 
-        public MainMenu(IServiceProvider serviceProvider) : base("Main Menu", "Video Menu", "Category Menu")
+        public MainMenu(IVideoService videoService, ICategoryService categoryService, IServiceProvider serviceProvider) : base("Main Menu", "Video Menu", "Category Menu")
         {
-
+            this.videoService = videoService;
+            this.categoryService = categoryService;
             this.serviceProvider = serviceProvider;
         }
 
@@ -27,10 +29,11 @@ namespace VideoMenu.GUI
             switch (option)
             {
                 case 1:
+                    //new VideoMenu(videoService, categoryService).Run();
                     serviceProvider.GetRequiredService<VideoMenu>().Run();
                     break;
                 case 2:
-                    serviceProvider.GetRequiredService<CategoryMenu>().Run();
+                    new CategoryMenu(categoryService).Run();
                     break;
                 default:
                     break;

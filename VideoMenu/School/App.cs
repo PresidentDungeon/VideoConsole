@@ -29,34 +29,9 @@ namespace School
             serviceCollection.AddScoped<VideoSearchMenu>();
             serviceCollection.AddScoped<CategoryMenu>();
 
-
-            serviceCollection.AddScoped<Video>();
             var serviceProvider = serviceCollection.BuildServiceProvider();
-
-            Video video = serviceProvider.GetRequiredService<Video>();
-            video.title = "test";
-            Console.WriteLine(video.title);
-
-            Video video2 = serviceProvider.GetRequiredService<Video>();
-            Console.WriteLine(video2.title);
-
-            video2.title = "something else";
-
-
-            Console.ReadLine();
-            Console.WriteLine(video.title);
-            Console.WriteLine(video2.title);
-
-
-
-
-            //var serviceProvider = serviceCollection.BuildServiceProvider();
-            //var mainMenu = serviceProvider.GetRequiredService<MainMenu>();
-            //mainMenu.Run();
-
-
-
-
+            var mainMenu = serviceProvider.GetRequiredService<MainMenu>();
+            mainMenu.Run();
 
         }
     }
